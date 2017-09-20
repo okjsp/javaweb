@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="simpleboard:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="simpleboard.war">
+      <element id="artifact" artifact-name="simpleboard:war exploded" />
+    </root>
+  </artifact>
+</component>
