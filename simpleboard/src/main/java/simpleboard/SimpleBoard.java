@@ -12,7 +12,7 @@ public class SimpleBoard {
     }
 
     public Article get(long l) {
-        for (Article article:store) {
+        for (Article article : store) {
             if (article.getId() == l) {
                 try {
                     return (Article) article.clone();
@@ -29,8 +29,7 @@ public class SimpleBoard {
     }
 
     public boolean delete(long l) {
-
-        for (Article article:store) {
+        for (Article article : store) {
             if (article.getId() == l) {
                 store.remove(article);
                 return true;
@@ -40,12 +39,14 @@ public class SimpleBoard {
     }
 
     public void update(Article article2) {
-        for (Article article:store) {
+        int idx = 0;
+        for (Article article : store) {
             if (article.getId() == article2.getId()) {
-                int idx = store.indexOf(article);
-                store.remove(article);
+                article = article2;
+                store.remove(idx);
                 store.add(idx, article2);
             }
+            idx++;
         }
 
     }

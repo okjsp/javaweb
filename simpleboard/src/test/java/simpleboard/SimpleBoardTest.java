@@ -65,7 +65,8 @@ public class SimpleBoardTest extends TestCase {
 		simpleBoard.update(article2);
 		
 		Article article3 = simpleBoard.get(1L);
-		assertEquals(article2.getContent(), article3.getContent());
+		assertNotSame(article2, article3);
+		assertEquals("content changed", article3.getContent());
 		
 	}
 

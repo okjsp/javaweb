@@ -38,7 +38,8 @@ public class Article implements Cloneable {
         this.content = content;
     }
 
-    public Object clone()throws CloneNotSupportedException{
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 }
