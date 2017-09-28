@@ -1,12 +1,13 @@
 #wrap {
     width: 460px;
-    border: 1px dashed red;
     margin: auto;
+    text-align: center;
 }
 table {
     width: 400px;
     border: 1px solid #00f;
     border-radius: 5px;
+    margin: 20px auto;
 }
 
 tr {
@@ -18,5 +19,9 @@ tr:nth-child(odd) {
 }
 
 td.writer, .time {
+    text-align: center;
+}
+
+form {
     text-align: center;
 }

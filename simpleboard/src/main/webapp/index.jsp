@@ -28,8 +28,6 @@
         <%
             List<Article> list = board.getList();
             for (Article article : list) {
-                System.out.println(article.getWriter());
-                for (int i = 0; i < 4; i++) {
         %>
         <tr>
             <td class="writer"><%= article.getWriter() %>
@@ -41,7 +39,14 @@
             <td class="time">2017-09-24</td>
         </tr>
         <%
-                }
+            }
+            if (list.size() == 0) {
+        %>
+        <tr>
+            <td colspan="4">empty
+            </td>
+        </tr>
+        <%
             }
         %>
     </table>
