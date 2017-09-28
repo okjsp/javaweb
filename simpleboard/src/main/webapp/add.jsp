@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Add</h2>
-<form action="add2.jsp" method="post">
+<form action="add.do" method="post">
     <input id="writer" name="writer" placeholder="writer..." required>
     <br>
     <input id="title" name="title" placeholder="title..." required>

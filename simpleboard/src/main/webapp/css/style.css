@@ -1,0 +1,22 @@
+#wrap {
+    width: 460px;
+    border: 1px dashed red;
+    margin: auto;
+}
+table {
+    width: 400px;
+    border: 1px solid #00f;
+    border-radius: 5px;
+}
+
+tr {
+    background-color: ivory;
+}
+
+tr:nth-child(odd) {
+    background-color: darkgray;
+}
+
+td.writer, .time {
+    text-align: center;
+}
