@@ -1,57 +1,33 @@
 package simpleboard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleBoard {
-    List<Article> store = new ArrayList<Article>();
+    SimpleBoardDao dao = new SimpleBoardDao();
 
     public boolean add(Article article) {
-        store.add(article);
+        dao.add(article);
         return true;
     }
 
-    public Article get(long l) {
-        for (Article article : store) {
-            if (article.getId() == l) {
-                try {
-                    return (Article) article.clone();
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
+    public Article get(long id) {
+        return dao.getById(id);
     }
 
     public long size() {
-        return store.size();
+        return dao.size();
     }
 
-    public boolean delete(long l) {
-        for (Article article : store) {
-            if (article.getId() == l) {
-                store.remove(article);
-                return true;
-            }
-        }
-        return false;
+    public boolean delete(long id) {
+        return dao.delete(id);
     }
 
-    public void update(Article article2) {
-        int idx = 0;
-        for (Article article : store) {
-            if (article.getId() == article2.getId()) {
-                article = article2;
-                store.remove(idx);
-                store.add(idx, article2);
-            }
-            idx++;
-        }
+    public void update(Article article) {
+        dao.update(article);
 
     }
 
     public List<Article> getList() {
-        return store;
+        return dao.getList();
     }
 }
