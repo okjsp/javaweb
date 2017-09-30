@@ -5,9 +5,9 @@ import java.util.List;
 public class SimpleBoard {
     SimpleBoardDao dao = new SimpleBoardDao();
 
-    public boolean add(Article article) {
-        dao.add(article);
-        return true;
+    public int add(Article article) {
+        int add = dao.add(article);
+        return add;
     }
 
     public Article get(long id) {

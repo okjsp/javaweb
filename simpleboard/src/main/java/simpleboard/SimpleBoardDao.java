@@ -27,7 +27,7 @@ public class SimpleBoardDao {
         return null;
     }
 
-    public void add(Article article) {
+    public int add(Article article) {
         String sql = "INSERT INTO simpleboard (writer, title, content) VALUES (?, ?, ?)";
         PreparedStatement pstmt;
         try {
@@ -35,11 +35,22 @@ public class SimpleBoardDao {
             pstmt.setString(1, article.getWriter());
             pstmt.setString(2, article.getTitle());
             pstmt.setString(3, article.getContent());
-            pstmt.executeUpdate();
+            int i = pstmt.executeUpdate();
             pstmt.close();
+            if (i == 1) {
+                pstmt = conn.prepareStatement("SELECT max(id) FROM simpleboard");
+                ResultSet resultSet = pstmt.executeQuery();
+                if (resultSet.next()) {
+                    i = resultSet.getInt(1);
+                }
+                resultSet.close();
+                pstmt.close();
+            }
+            return i;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
     public Article getById(long id) {
@@ -53,7 +64,7 @@ public class SimpleBoardDao {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 article = new Article();
-                article.setId(id);
+                article.setId(rs.getLong("id"));
                 article.setWriter(rs.getString("writer"));
                 article.setTitle(rs.getString("title"));
                 article.setContent(rs.getString("content"));
@@ -130,11 +141,11 @@ public class SimpleBoardDao {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Article article = new Article();
-                article = new Article();
                 article.setId(rs.getLong("id"));
                 article.setWriter(rs.getString("writer"));
                 article.setTitle(rs.getString("title"));
                 article.setContent(rs.getString("content"));
+                list.add(article);
             }
             rs.close();
             pstmt.close();
