@@ -1,0 +1,27 @@
+#wrap {
+    width: 460px;
+    margin: auto;
+    text-align: center;
+}
+table {
+    width: 400px;
+    border: 1px solid #00f;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+tr {
+    background-color: ivory;
+}
+
+tr:nth-child(odd) {
+    background-color: darkgray;
+}
+
+td.writer, .time {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
