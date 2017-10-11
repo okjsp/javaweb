@@ -40,7 +40,7 @@ public class PhotoGalleryDao {
         Connection conn = getConnection();
         PreparedStatement pstmt;
         try {
-            String sql = "INSERT INTO simpleboard (writer, title, content) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO photogallery (writer, title, content) VALUES (?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, article.getWriter());
             pstmt.setString(2, article.getTitle());
@@ -48,7 +48,7 @@ public class PhotoGalleryDao {
             int i = pstmt.executeUpdate();
             pstmt.close();
             if (i == 1) {
-                pstmt = conn.prepareStatement("SELECT max(id) FROM simpleboard");
+                pstmt = conn.prepareStatement("SELECT max(id) FROM photogallery");
                 ResultSet resultSet = pstmt.executeQuery();
                 if (resultSet.next()) {
                     i = resultSet.getInt(1);
@@ -66,7 +66,7 @@ public class PhotoGalleryDao {
 
     public Article getById(long id) {
         Connection conn = getConnection();
-        String sql = "SELECT * FROM simpleboard WHERE id = ?";
+        String sql = "SELECT * FROM photogallery WHERE id = ?";
         PreparedStatement pstmt;
         ResultSet rs;
         Article article = null;
@@ -93,7 +93,7 @@ public class PhotoGalleryDao {
 
     public long size() {
         Connection conn = getConnection();
-        String sql = "SELECT count(*) FROM simpleboard";
+        String sql = "SELECT count(*) FROM photogallery";
         PreparedStatement pstmt;
         ResultSet rs;
         Long count = 0L;
@@ -115,7 +115,7 @@ public class PhotoGalleryDao {
 
     public boolean delete(long id) {
         Connection conn = getConnection();
-        String sql = "DELETE from simpleboard WHERE id = ?";
+        String sql = "DELETE from photogallery WHERE id = ?";
         PreparedStatement pstmt;
         int cnt = 0;
         try {
@@ -131,7 +131,7 @@ public class PhotoGalleryDao {
 
     public void update(Article article) {
         Connection conn = getConnection();
-        String sql = "UPDATE simpleboard SET writer =?, title = ?, content = ? where id = ?";
+        String sql = "UPDATE photogallery SET writer =?, title = ?, content = ? where id = ?";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -152,7 +152,7 @@ public class PhotoGalleryDao {
 
         Connection conn = getConnection();
         List<Article> list = new ArrayList<Article>();
-        String sql = "SELECT * FROM simpleboard ORDER by id desc";
+        String sql = "SELECT * FROM photogallery ORDER by id desc";
         PreparedStatement pstmt;
         ResultSet rs;
         try {

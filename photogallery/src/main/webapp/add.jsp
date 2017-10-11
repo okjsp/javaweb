@@ -10,7 +10,7 @@
 <div id="wrap">
     <%= article %>
     <h2>Add</h2>
-    <form action="add.do" method="post">
+    <form action="add.do" method="post" enctype="multipart/form-data">
         <input id="writer" name="writer" placeholder="writer..." required class="form">
         <br>
         <input id="title" name="title" placeholder="title..." required class="form">
