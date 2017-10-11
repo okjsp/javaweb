@@ -11,15 +11,15 @@ import java.util.List;
 public class SimpleBoardDao {
 
     public Connection getConnection() {
+        Connection conn = null;
         try {
-            Connection conn = null;
             try {
                 Context initContext = new InitialContext();
                 Context envContext = (Context) initContext.lookup("java:/comp/env");
                 DataSource ds = (DataSource) envContext.lookup("jdbc/DevDB");
                 conn = ds.getConnection();
             } catch (NamingException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             if (conn == null) {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -33,7 +33,7 @@ public class SimpleBoardDao {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return conn;
     }
 
     public int add(Article article) {
