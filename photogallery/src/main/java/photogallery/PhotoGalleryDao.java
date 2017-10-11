@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleBoardDao {
+public class PhotoGalleryDao {
 
     public Connection getConnection() {
         Connection conn = null;

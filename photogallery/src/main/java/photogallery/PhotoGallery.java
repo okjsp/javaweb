@@ -1,9 +1,9 @@
-package simpleboard;
+package photogallery;
 
 import java.util.List;
 
-public class SimpleBoard {
-    SimpleBoardDao dao = new SimpleBoardDao();
+public class PhotoGallery {
+    PhotoGalleryDao dao = new PhotoGalleryDao();
 
     public int add(Article article) {
         return dao.add(article);

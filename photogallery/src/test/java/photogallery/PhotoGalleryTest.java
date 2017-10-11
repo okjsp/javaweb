@@ -1,18 +1,18 @@
-package simpleboard;
+package photogallery;
 
 import java.util.List;
 
 import junit.framework.TestCase;
 
-public class SimpleBoardTest extends TestCase {
+public class PhotoGalleryTest extends TestCase {
     public void testAdd() {
         Article article = new Article();
         article.setWriter("kenu");
         article.setTitle("title");
         article.setContent("content");
 
-        SimpleBoard simpleBoard = new SimpleBoard();
-        int add = simpleBoard.add(article);
+        PhotoGallery photoGallery = new PhotoGallery();
+        int add = photoGallery.add(article);
         assertTrue(add > 0);
     }
 
@@ -22,11 +22,11 @@ public class SimpleBoardTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        SimpleBoard simpleBoard = new SimpleBoard();
-        int add = simpleBoard.add(article);
+        PhotoGallery photoGallery = new PhotoGallery();
+        int add = photoGallery.add(article);
         assertTrue(add > 0);
 
-        Article article2 = simpleBoard.get(add);
+        Article article2 = photoGallery.get(add);
         assertEquals(article.getWriter(), article2.getWriter());
 
     }
@@ -37,13 +37,13 @@ public class SimpleBoardTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        SimpleBoard simpleBoard = new SimpleBoard();
-        int add = simpleBoard.add(article);
+        PhotoGallery photoGallery = new PhotoGallery();
+        int add = photoGallery.add(article);
 
-        long sizeBefore = simpleBoard.size();
-        boolean result = simpleBoard.delete(add);
+        long sizeBefore = photoGallery.size();
+        boolean result = photoGallery.delete(add);
         assertTrue(result);
-        long sizeAfter = simpleBoard.size();
+        long sizeAfter = photoGallery.size();
         assertEquals(1, sizeBefore - sizeAfter);
     }
 
@@ -54,15 +54,15 @@ public class SimpleBoardTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        SimpleBoard simpleBoard = new SimpleBoard();
-        int add = simpleBoard.add(article);
+        PhotoGallery photoGallery = new PhotoGallery();
+        int add = photoGallery.add(article);
         assertTrue(add > 0);
 
-        Article article2 = simpleBoard.get(add);
+        Article article2 = photoGallery.get(add);
         article2.setContent("content changed");
-        simpleBoard.update(article2);
+        photoGallery.update(article2);
 
-        Article article3 = simpleBoard.get(add);
+        Article article3 = photoGallery.get(add);
         assertNotSame(article2, article3);
         assertEquals("content changed", article3.getContent());
 
@@ -79,14 +79,14 @@ public class SimpleBoardTest extends TestCase {
         article2.setTitle("title2");
         article2.setContent("content2");
 
-        SimpleBoard simpleBoard = new SimpleBoard();
-        int before = simpleBoard.getList().size();
-        int add = simpleBoard.add(article);
+        PhotoGallery photoGallery = new PhotoGallery();
+        int before = photoGallery.getList().size();
+        int add = photoGallery.add(article);
         assertTrue(add > 0);
-        int add1 = simpleBoard.add(article2);
+        int add1 = photoGallery.add(article2);
         assertTrue(add1 > 0);
 
-        List<Article> list = simpleBoard.getList();
+        List<Article> list = photoGallery.getList();
         int size = list.size();
         assertEquals(2, size - before);
 

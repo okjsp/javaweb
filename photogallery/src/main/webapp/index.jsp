@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="simpleboard.Article" %>
+<%@ page import="photogallery.Article" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<jsp:useBean id="board" class="simpleboard.SimpleBoard" scope="application"/>
+<jsp:useBean id="board" class="photogallery.PhotoGallery" scope="application"/>
 <!doctype html>
 <html>
 <head>

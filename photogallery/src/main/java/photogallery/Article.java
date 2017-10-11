@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 public class Article implements Cloneable {
     private long id;

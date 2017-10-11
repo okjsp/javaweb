@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SimpleBoardServlet extends HttpServlet {
+public class PhotoGalleryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SimpleBoard board = (SimpleBoard) getServletContext().getAttribute("board");
+        PhotoGallery board = (PhotoGallery) getServletContext().getAttribute("board");
         if (board == null) {
-            getServletContext().setAttribute("board", new SimpleBoard());
+            getServletContext().setAttribute("board", new PhotoGallery());
         }
         String idStr = request.getParameter("id");
         Long id = 0L;
@@ -24,9 +24,9 @@ public class SimpleBoardServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SimpleBoard board = (SimpleBoard) getServletContext().getAttribute("board");
+        PhotoGallery board = (PhotoGallery) getServletContext().getAttribute("board");
         if (board == null) {
-            getServletContext().setAttribute("board", new SimpleBoard());
+            getServletContext().setAttribute("board", new PhotoGallery());
         }
         String idStr = request.getParameter("id");
         Long id = 0L;

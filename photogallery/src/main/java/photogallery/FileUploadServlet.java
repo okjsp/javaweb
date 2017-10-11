@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;

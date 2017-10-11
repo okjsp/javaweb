@@ -4,7 +4,7 @@
 	<artifactId>photogallery</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>simpleboard Maven Webapp</name>
+	<name>photogallery Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>

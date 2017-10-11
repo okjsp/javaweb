@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<jsp:useBean id="article" class="simpleboard.Article" scope="request" />
+<jsp:useBean id="article" class="photogallery.Article" scope="request" />
 <!doctype html>
 <html>
 <head>

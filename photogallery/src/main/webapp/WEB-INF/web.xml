@@ -26,18 +26,18 @@
 
     <servlet>
         <servlet-name>testServlet</servlet-name>
-        <servlet-class>simpleboard.TestServlet</servlet-class>
+        <servlet-class>photogallery.TestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>testServlet</servlet-name>
         <url-pattern>*.test</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>SimpleBoardServlet</servlet-name>
-        <servlet-class>simpleboard.SimpleBoardServlet</servlet-class>
+        <servlet-name>PhotoGalleryServlet</servlet-name>
+        <servlet-class>photogallery.PhotoGalleryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SimpleBoardServlet</servlet-name>
+        <servlet-name>PhotoGalleryServlet</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

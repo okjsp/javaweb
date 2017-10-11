@@ -1,4 +1,4 @@
-package simpleboard;
+package photogallery;
 
 import org.junit.After;
 import org.junit.Before;
