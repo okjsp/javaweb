@@ -25,3 +25,7 @@ td.writer, .time {
 form {
     text-align: center;
 }
+
+.thumb {
+    width: 95%;
+}

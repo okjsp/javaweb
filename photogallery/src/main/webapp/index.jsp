@@ -23,7 +23,6 @@
             <th>Writer</th>
             <th>Title</th>
             <th>Content</th>
-            <th>Time</th>
         </tr>
         <%
             List<Article> list = board.getList();
@@ -36,14 +35,20 @@
             </a></td>
             <td class="content"><%= article.getContent() %>
             </td>
-            <td class="time">2017-09-24</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <%= article.getContent() %>
+                <br>
+                <img src="/image.do?<%= article.getSaveName() %>" class="thumb"/>
+            </td>
         </tr>
         <%
             }
             if (list.size() == 0) {
         %>
         <tr>
-            <td colspan="4">empty
+            <td colspan="3">empty
             </td>
         </tr>
         <%

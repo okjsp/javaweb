@@ -35,6 +35,12 @@
     <servlet>
         <servlet-name>PhotoGalleryServlet</servlet-name>
         <servlet-class>photogallery.PhotoGalleryServlet</servlet-class>
+        <multipart-config>
+            <location>/tmp/upload</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>PhotoGalleryServlet</servlet-name>

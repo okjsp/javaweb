@@ -40,11 +40,15 @@ public class PhotoGalleryDao {
         Connection conn = getConnection();
         PreparedStatement pstmt;
         try {
-            String sql = "INSERT INTO photogallery (writer, title, content) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO photogallery (writer, title, content, filename, savename, filesize)" +
+                    " VALUES (?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, article.getWriter());
             pstmt.setString(2, article.getTitle());
             pstmt.setString(3, article.getContent());
+            pstmt.setString(4, article.getFilename());
+            pstmt.setString(5, article.getSaveName());
+            pstmt.setLong(6, article.getFileSize());
             int i = pstmt.executeUpdate();
             pstmt.close();
             if (i == 1) {
@@ -80,6 +84,9 @@ public class PhotoGalleryDao {
                 article.setWriter(rs.getString("writer"));
                 article.setTitle(rs.getString("title"));
                 article.setContent(rs.getString("content"));
+                article.setFilename(rs.getString("filename"));
+                article.setSaveName(rs.getString("savename"));
+                article.setFileSize(rs.getLong("filesize"));
             }
             rs.close();
             pstmt.close();
@@ -131,14 +138,20 @@ public class PhotoGalleryDao {
 
     public void update(Article article) {
         Connection conn = getConnection();
-        String sql = "UPDATE photogallery SET writer =?, title = ?, content = ? where id = ?";
+        String sql = "UPDATE photogallery SET" +
+                " writer =?, title = ?, content = ?," +
+                " filename = ?, savename = ?, filesize = ?" +
+                " where id = ?";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, article.getWriter());
             pstmt.setString(2, article.getTitle());
             pstmt.setString(3, article.getContent());
-            pstmt.setLong(4, article.getId());
+            pstmt.setString(4, article.getFilename());
+            pstmt.setString(5, article.getSaveName());
+            pstmt.setLong(6, article.getFileSize());
+            pstmt.setLong(7, article.getId());
             pstmt.executeUpdate();
             pstmt.close();
             conn.close();
@@ -164,6 +177,9 @@ public class PhotoGalleryDao {
                 article.setWriter(rs.getString("writer"));
                 article.setTitle(rs.getString("title"));
                 article.setContent(rs.getString("content"));
+                article.setFilename(rs.getString("filename"));
+                article.setSaveName(rs.getString("savename"));
+                article.setFileSize(rs.getLong("filesize"));
                 list.add(article);
             }
             rs.close();

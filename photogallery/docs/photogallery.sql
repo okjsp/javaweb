@@ -9,8 +9,8 @@ create table devcamp.photogallery (
   title varchar(100),
   content text,
   filename VARCHAR (255),
-  savename VARCHAR (20),
-  filesize int);
+  saveName VARCHAR (20),
+  fileSize int);
 
 insert into devcamp.photogallery (writer, title, content) values ('kenu', 'kenu.heo@gmail.com', 'content');
 
@@ -28,7 +28,7 @@ create table javatest.photogallery (
   title varchar(100),
   content text,
   filename VARCHAR (255),
-  savename VARCHAR (20),
-  filesize int);
+  saveName VARCHAR (20),
+  fileSize int);
 
 insert into javatest.photogallery (writer, title, content) values ('kenu', 'kenu.heo@gmail.com', 'content');

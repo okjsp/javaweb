@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="wrap">
-    <%= article %>
+    <%= application.getRealPath("/")  %>
     <h2>Add</h2>
     <form action="add.do" method="post" enctype="multipart/form-data">
         <input id="writer" name="writer" placeholder="writer..." required class="form">
@@ -16,6 +16,8 @@
         <input id="title" name="title" placeholder="title..." required class="form">
         <br>
         <textarea id="content" name="content" required class="form"></textarea>
+        <br>
+        <input id="file" name="file" type="file" placeholder="image file" required>
         <br>
         <input type="submit" value="Add">
     </form>

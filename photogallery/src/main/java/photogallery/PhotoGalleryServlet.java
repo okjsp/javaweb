@@ -4,9 +4,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.Part;
+import java.io.*;
+import java.util.Date;
 
 public class PhotoGalleryServlet extends HttpServlet {
+
+    private final String basePath = "/tmp/upload/";;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PhotoGallery board = (PhotoGallery) getServletContext().getAttribute("board");
         if (board == null) {
@@ -19,11 +24,73 @@ public class PhotoGalleryServlet extends HttpServlet {
         }
         Article article = board.get(id);
         request.setAttribute("article", article);
+
+        String requestURI = request.getRequestURI();
+        if (requestURI.equals("/")) {
+            board.add(article);
+        } else if (requestURI.equals("/image.do")){
+            String saveName = request.getQueryString();
+
+            File f=new File(basePath + saveName);
+            InputStream is = new FileInputStream(f);
+
+            OutputStream oos = response.getOutputStream();
+
+            byte[] buf = new byte[8192];
+            int c = 0;
+            while ((c = is.read(buf, 0, buf.length)) > 0) {
+                oos.write(buf, 0, c);
+                oos.flush();
+            }
+
+            oos.close();
+            is.close();
+
+            return;
+        }
+
         request.getRequestDispatcher("add.jsp").forward(request, response);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final Part filePart = request.getPart("file");
+        final String fileName = getFileName(filePart);
+        String saveName = String.valueOf(new Date().getTime());
+        Long fileSize = 0L;
+
+        OutputStream out = null;
+        InputStream filecontent = null;
+        final PrintWriter printWriter = response.getWriter();
+
+        try {
+            out = new FileOutputStream(new File(basePath + File.separator
+                    + saveName));
+            filecontent = filePart.getInputStream();
+
+            int read = 0;
+            final byte[] bytes = new byte[1024];
+
+            while ((read = filecontent.read(bytes)) != -1) {
+                fileSize += read;
+                out.write(bytes, 0, read);
+            }
+        } catch (FileNotFoundException fne) {
+            printWriter.println("You either did not specify a file to upload or are "
+                    + "trying to upload a file to a protected or nonexistent "
+                    + "location.");
+            printWriter.println("<br/> ERROR: " + fne.getMessage());
+            return;
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            if (filecontent != null) {
+                filecontent.close();
+            }
+        }
+
+
         PhotoGallery board = (PhotoGallery) getServletContext().getAttribute("board");
         if (board == null) {
             getServletContext().setAttribute("board", new PhotoGallery());
@@ -42,6 +109,9 @@ public class PhotoGalleryServlet extends HttpServlet {
         article.setWriter(writer);
         article.setTitle(title);
         article.setContent(content);
+        article.setFilename(fileName);
+        article.setSaveName(saveName);
+        article.setFileSize(fileSize);
 
         String requestURI = request.getRequestURI();
 
@@ -54,4 +124,14 @@ public class PhotoGalleryServlet extends HttpServlet {
         }
         response.sendRedirect("/");
     }
+    private String getFileName(final Part part) {
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(
+                        content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
+
 }

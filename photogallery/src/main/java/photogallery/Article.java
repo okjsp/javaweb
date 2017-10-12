@@ -6,8 +6,8 @@ public class Article implements Cloneable {
     private String title;
     private String content;
     private String filename;
-    private String savename;
-    private int filesize;
+    private String saveName;
+    private long fileSize;
 
     public long getId() {
         return id;
@@ -49,20 +49,20 @@ public class Article implements Cloneable {
         this.filename = filename;
     }
 
-    public String getSavename() {
-        return savename;
+    public String getSaveName() {
+        return saveName;
     }
 
-    public void setSavename(String savename) {
-        this.savename = savename;
+    public void setSaveName(String saveName) {
+        this.saveName = saveName;
     }
 
-    public int getFilesize() {
-        return filesize;
+    public long getFileSize() {
+        return fileSize;
     }
 
-    public void setFilesize(int filesize) {
-        this.filesize = filesize;
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
     }
 
     @Override
