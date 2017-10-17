@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class PhotoGalleryServlet extends HttpServlet {
 
-    private final String basePath = "/tmp/upload/";;
+    private final String basePath = "/tmp/upload";;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PhotoGallery board = (PhotoGallery) getServletContext().getAttribute("board");

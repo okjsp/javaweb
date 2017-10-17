@@ -1,7 +1,10 @@
 package photogallery;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class PhotoGallery {
     PhotoGalleryDao dao = new PhotoGalleryDao();
 
@@ -23,7 +26,6 @@ public class PhotoGallery {
 
     public void update(Article article) {
         dao.update(article);
-
     }
 
     public List<Article> getList() {

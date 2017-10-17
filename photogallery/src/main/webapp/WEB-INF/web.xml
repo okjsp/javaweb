@@ -6,6 +6,12 @@
          version="3.1"
          metadata-complete="false">
     <display-name>Archetype Created Web Application</display-name>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
     <filter>
         <filter-name>Set Character Encoding</filter-name>
         <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
@@ -24,14 +30,30 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/photogallery-servlet.xml</param-value>
+    </context-param>
+
     <servlet>
-        <servlet-name>testServlet</servlet-name>
-        <servlet-class>photogallery.TestServlet</servlet-class>
+        <servlet-name>photogallery</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <location>/tmp/upload</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
-        <servlet-name>testServlet</servlet-name>
-        <url-pattern>*.test</url-pattern>
+        <servlet-name>photogallery</servlet-name>
+        <url-pattern>*.action</url-pattern>
     </servlet-mapping>
+
+
     <servlet>
         <servlet-name>PhotoGalleryServlet</servlet-name>
         <servlet-class>photogallery.PhotoGalleryServlet</servlet-class>

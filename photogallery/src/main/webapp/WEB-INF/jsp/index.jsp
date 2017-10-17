@@ -1,7 +1,6 @@
-<%@ page import="java.util.List" %>
 <%@ page import="photogallery.Article" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<jsp:useBean id="board" class="photogallery.PhotoGallery" scope="application"/>
 <!doctype html>
 <html>
 <head>
@@ -10,7 +9,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Photo Gallery List</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div id="wrap">
@@ -25,13 +24,13 @@
             <th>Content</th>
         </tr>
         <%
-            List<Article> list = board.getList();
+            List<Article> list = (List<Article>)request.getAttribute("list");
             for (Article article : list) {
         %>
         <tr>
             <td class="writer"><%= article.getWriter() %>
             </td>
-            <td class="title"><a href="update.do?id=<%= article.getId() %>"><%= article.getTitle() %>
+            <td class="title"><a href="add.action?id=<%= article.getId() %>"><%= article.getTitle() %>
             </a></td>
             <td class="content"><%= article.getContent() %>
             </td>
@@ -40,7 +39,7 @@
             <td colspan="3">
                 <%= article.getContent() %>
                 <br>
-                <img src="/image.do?<%= article.getSaveName() %>" class="thumb"/>
+                <img src="/image.action?<%= article.getSaveName() %>" class="thumb"/>
             </td>
         </tr>
         <%
@@ -55,7 +54,7 @@
             }
         %>
     </table>
-    <a href="add.jsp">Add</a>
+    <a href="add.action">Add</a>
 </div>
 
 </body>
