@@ -22,6 +22,7 @@
             <th>Writer</th>
             <th>Title</th>
             <th>Content</th>
+            <th>x</th>
         </tr>
         <%
             List<Article> list = (List<Article>)request.getAttribute("list");
@@ -34,9 +35,11 @@
             </a></td>
             <td class="content"><%= article.getContent() %>
             </td>
+            <td class="delete"><a href="delete.action?id=<%= article.getId() %>">x</a>
+            </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="4">
                 <%= article.getContent() %>
                 <br>
                 <img src="/image.action?<%= article.getSaveName() %>" class="thumb"/>
@@ -47,7 +50,7 @@
             if (list.size() == 0) {
         %>
         <tr>
-            <td colspan="3">empty
+            <td colspan="4">empty
             </td>
         </tr>
         <%

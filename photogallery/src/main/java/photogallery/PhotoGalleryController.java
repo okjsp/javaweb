@@ -30,7 +30,8 @@ public class PhotoGalleryController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String add(HttpServletRequest request, @RequestParam("id") long id) {
+    public String add(HttpServletRequest request,
+                      @RequestParam(value = "id", defaultValue = "0", required = false) Long id) {
         String actionState = "Add";
         if (id > 0) {
             request.setAttribute("article", board.get(id));
@@ -44,7 +45,7 @@ public class PhotoGalleryController {
     public void image(HttpServletRequest request, HttpServletResponse response) {
         String saveName = request.getQueryString();
 
-        File f=new File(basePath + saveName);
+        File f = new File(basePath + saveName);
         InputStream is = null;
         try {
             is = new FileInputStream(f);
@@ -67,6 +68,13 @@ public class PhotoGalleryController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addTo(Article article, @RequestParam("file") MultipartFile file) {
+        saveFile(article, file);
+
+        board.add(article);
+        return "redirect:/index.action";
+    }
+
+    private void saveFile(Article article, @RequestParam("file") MultipartFile file) {
         String saveName = String.valueOf(new Date().getTime());
 
         OutputStream fos = null;
@@ -87,8 +95,22 @@ public class PhotoGalleryController {
         article.setFilename(file.getOriginalFilename());
         article.setSaveName(saveName);
         article.setFileSize(file.getSize());
+    }
 
-        board.add(article);
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(Article article, @RequestParam("file") MultipartFile file) {
+        if (file != null) {
+            saveFile(article, file);
+        }
+
+        board.update(article);
+        return "redirect:/index.action";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam(value = "id", defaultValue = "0", required = false) Long id) {
+
+        board.delete(id);
         return "redirect:/index.action";
     }
 
