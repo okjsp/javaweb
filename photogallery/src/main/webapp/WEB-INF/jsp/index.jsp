@@ -35,7 +35,7 @@
             </a></td>
             <td class="content"><%= article.getContent() %>
             </td>
-            <td class="delete"><a href="delete.action?id=<%= article.getId() %>">x</a>
+            <td class="delete"><a href="javascript:deleteFile(<%= article.getId() %>)">x</a>
             </td>
         </tr>
         <tr>
@@ -59,6 +59,17 @@
     </table>
     <a href="add.action">Add</a>
 </div>
-
+<form id="idform" style="display: none;">
+    <input name="id">
+</form>
+<script>
+    function deleteFile(id) {
+        var form = document.getElementById("idform");
+        form.action = "/delete.action";
+        form.method = "POST";
+        document.getElementsByName("id")[0].value = id;
+        form.submit();
+    }
+</script>
 </body>
 </html>
