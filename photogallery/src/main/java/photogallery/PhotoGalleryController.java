@@ -103,6 +103,7 @@ public class PhotoGalleryController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(Article article, @RequestParam("file") MultipartFile file) {
         if (file != null) {
+            deleteFile(article.getSaveName());
             saveFile(article, file);
         }
 
@@ -110,11 +111,24 @@ public class PhotoGalleryController {
         return "redirect:/index.action";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(@RequestParam(value = "id", defaultValue = "0", required = false) Long id) {
+        Article article = board.get(id);
 
         board.delete(id);
+        deleteFile(article.getSaveName());
         return "redirect:/index.action";
+    }
+
+    private void deleteFile(String saveName) {
+        // create File instance
+        File f = new File(basePath + saveName);
+
+        // check exist
+        if (f.exists()) {
+            // delete
+            f.delete();
+        }
     }
 
 }
