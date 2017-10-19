@@ -17,7 +17,7 @@ import java.util.Date;
 public class PhotoGalleryController {
 
     @Autowired
-    PhotoGallery board;
+    PhotoGalleryService board;
 
     private final String basePath = "/tmp/upload/";
 

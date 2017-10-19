@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PhotoGallery {
+public class PhotoGalleryService {
 
     @Autowired
     PhotoGalleryDao photoGalleryDao;
