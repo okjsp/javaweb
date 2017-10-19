@@ -1,36 +1,28 @@
 package photogallery;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PhotoGalleryDao {
+
+    @Autowired
+    private DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public Connection getConnection() {
         Connection conn = null;
         try {
-            try {
-                Context initContext = new InitialContext();
-                Context envContext = (Context) initContext.lookup("java:/comp/env");
-                DataSource ds = (DataSource) envContext.lookup("jdbc/DevDB");
-                conn = ds.getConnection();
-            } catch (NamingException e) {
-//                e.printStackTrace();
-            }
-            if (conn == null) {
-                Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.
-                        getConnection("jdbc:mysql://localhost:3306/javatest", "javauser", "javadude");
-                System.out.println(conn);
-                return conn;
-            }
+            conn = dataSource.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return conn;

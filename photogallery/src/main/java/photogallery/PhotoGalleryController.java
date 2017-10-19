@@ -44,6 +44,9 @@ public class PhotoGalleryController {
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void image(HttpServletRequest request, HttpServletResponse response) {
         String saveName = request.getQueryString();
+        if (saveName == null) {
+            return;
+        }
 
         File f = new File(basePath + saveName);
         InputStream is = null;

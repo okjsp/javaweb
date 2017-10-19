@@ -27,7 +27,6 @@
                 <input id="fileName" name="filename" type="hidden" value="${article.filename}">
                 <input id="fileSize" name="fileSize" type="hidden" value="${article.fileSize}">
                 <input id="saveName" name="saveName" type="hidden" value="${article.saveName}">
-                <input id="id" name="id" type="hidden" value="${article.id}">
                 <input id="file" name="file" type="file" placeholder="image file" >
             </c:when>
             <c:otherwise>
@@ -36,6 +35,7 @@
         </c:choose>
 
         <br>
+        <input id="id" name="id" type="hidden" value="${article.id}">
         <input type="submit" value="${action}">
     </form>
 </div>

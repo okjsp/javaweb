@@ -3,26 +3,36 @@ package photogallery;
 import java.util.List;
 
 import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:photogallery-test.xml")
 public class PhotoGalleryTest extends TestCase {
+    @Autowired
+    PhotoGallery photoGallery;
+
+    @Test
     public void testAdd() {
         Article article = new Article();
         article.setWriter("kenu");
         article.setTitle("title");
         article.setContent("content");
 
-        PhotoGallery photoGallery = new PhotoGallery();
         int add = photoGallery.add(article);
         assertTrue(add > 0);
     }
 
+    @Test
     public void testGet() {
         Article article = new Article();
         article.setWriter("kenu");
         article.setTitle("title");
         article.setContent("content");
 
-        PhotoGallery photoGallery = new PhotoGallery();
         int add = photoGallery.add(article);
         assertTrue(add > 0);
 
@@ -31,13 +41,13 @@ public class PhotoGalleryTest extends TestCase {
 
     }
 
+    @Test
     public void testDelete() {
         Article article = new Article();
         article.setWriter("kenu");
         article.setTitle("title");
         article.setContent("content");
 
-        PhotoGallery photoGallery = new PhotoGallery();
         int add = photoGallery.add(article);
 
         long sizeBefore = photoGallery.size();
@@ -47,6 +57,7 @@ public class PhotoGalleryTest extends TestCase {
         assertEquals(1, sizeBefore - sizeAfter);
     }
 
+    @Test
     public void testUpdate() {
         Article article = new Article();
         article.setId(1L);
@@ -54,7 +65,6 @@ public class PhotoGalleryTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        PhotoGallery photoGallery = new PhotoGallery();
         int add = photoGallery.add(article);
         assertTrue(add > 0);
 
@@ -79,7 +89,6 @@ public class PhotoGalleryTest extends TestCase {
         article2.setTitle("title2");
         article2.setContent("content2");
 
-        PhotoGallery photoGallery = new PhotoGallery();
         int before = photoGallery.getList().size();
         int add = photoGallery.add(article);
         assertTrue(add > 0);

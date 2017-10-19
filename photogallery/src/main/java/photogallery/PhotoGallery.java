@@ -1,34 +1,37 @@
 package photogallery;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class PhotoGallery {
-    PhotoGalleryDao dao = new PhotoGalleryDao();
+
+    @Autowired
+    PhotoGalleryDao photoGalleryDao;
 
     public int add(Article article) {
-        return dao.add(article);
+        return photoGalleryDao.add(article);
     }
 
     public Article get(long id) {
-        return dao.getById(id);
+        return photoGalleryDao.getById(id);
     }
 
     public long size() {
-        return dao.size();
+        return photoGalleryDao.size();
     }
 
     public boolean delete(long id) {
-        return dao.delete(id);
+        return photoGalleryDao.delete(id);
     }
 
     public void update(Article article) {
-        dao.update(article);
+        photoGalleryDao.update(article);
     }
 
     public List<Article> getList() {
-        return dao.getList();
+        return photoGalleryDao.getList();
     }
 }
