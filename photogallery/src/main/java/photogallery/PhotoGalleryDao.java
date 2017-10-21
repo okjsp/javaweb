@@ -14,10 +14,6 @@ public class PhotoGalleryDao {
     @Autowired
     private DataSource dataSource;
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     public Connection getConnection() {
         Connection conn = null;
         try {
