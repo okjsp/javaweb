@@ -11,7 +11,7 @@ public class PhotoGalleryService {
     @Autowired
     PhotoGalleryDao photoGalleryDao;
 
-    public int add(Article article) {
+    public long add(Article article) {
         return photoGalleryDao.add(article);
     }
 
