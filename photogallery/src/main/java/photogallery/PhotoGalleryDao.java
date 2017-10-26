@@ -1,8 +1,13 @@
 package photogallery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,174 +19,78 @@ public class PhotoGalleryDao {
     @Autowired
     private DataSource dataSource;
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    @PostConstruct
+    public void afterPropertiesSet() throws Exception {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Connection getConnection() {
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
+    public long add(Article article) {
+        String sql = "INSERT INTO photogallery (writer, title, content, filename, savename, filesize)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
 
-    public int add(Article article) {
-        Connection conn = getConnection();
-        PreparedStatement pstmt;
-        try {
-            String sql = "INSERT INTO photogallery (writer, title, content, filename, savename, filesize)" +
-                    " VALUES (?, ?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, article.getWriter());
-            pstmt.setString(2, article.getTitle());
-            pstmt.setString(3, article.getContent());
-            pstmt.setString(4, article.getFilename());
-            pstmt.setString(5, article.getSaveName());
-            pstmt.setLong(6, article.getFileSize());
-            int i = pstmt.executeUpdate();
-            pstmt.close();
-            if (i == 1) {
-                pstmt = conn.prepareStatement("SELECT max(id) FROM photogallery");
-                ResultSet resultSet = pstmt.executeQuery();
-                if (resultSet.next()) {
-                    i = resultSet.getInt(1);
-                }
-                resultSet.close();
-                pstmt.close();
-                conn.close();
-            }
-            return i;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        int update = jdbcTemplate.update(sql, new Object[]{article.getWriter(),
+                article.getTitle(), article.getContent(),
+                article.getFilename(), article.getSaveName(),
+                article.getFileSize()
+        });
+
+        long cnt = 0;
+        if (update == 1) {
+            cnt = jdbcTemplate.queryForObject("SELECT max(id) FROM photogallery", Long.class);
         }
-        return 0;
+        return cnt;
     }
 
     public Article getById(long id) {
-        Connection conn = getConnection();
         String sql = "SELECT * FROM photogallery WHERE id = ?";
-        PreparedStatement pstmt;
-        ResultSet rs;
-        Article article = null;
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                article = new Article();
-                article.setId(rs.getLong("id"));
-                article.setWriter(rs.getString("writer"));
-                article.setTitle(rs.getString("title"));
-                article.setContent(rs.getString("content"));
-                article.setFilename(rs.getString("filename"));
-                article.setSaveName(rs.getString("savename"));
-                article.setFileSize(rs.getLong("filesize"));
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Article article = jdbcTemplate.queryForObject(sql, new ArticleMapper(), id);
 
         return article;
     }
 
     public long size() {
-        Connection conn = getConnection();
         String sql = "SELECT count(*) FROM photogallery";
-        PreparedStatement pstmt;
-        ResultSet rs;
-        Long count = 0L;
-
-        try {
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                count = rs.getLong(1);
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
+        long cnt = jdbcTemplate.queryForObject(sql, Long.class);
+        return cnt;
     }
 
     public boolean delete(long id) {
-        Connection conn = getConnection();
         String sql = "DELETE from photogallery WHERE id = ?";
-        PreparedStatement pstmt;
-        int cnt = 0;
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
-            cnt = pstmt.executeUpdate();
-            pstmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return cnt == 1;
+        int update = jdbcTemplate.update(sql, id);
+        return update == 1;
     }
 
     public void update(Article article) {
-        Connection conn = getConnection();
         String sql = "UPDATE photogallery SET" +
                 " writer =?, title = ?, content = ?," +
                 " filename = ?, savename = ?, filesize = ?" +
                 " where id = ?";
-        PreparedStatement pstmt;
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, article.getWriter());
-            pstmt.setString(2, article.getTitle());
-            pstmt.setString(3, article.getContent());
-            pstmt.setString(4, article.getFilename());
-            pstmt.setString(5, article.getSaveName());
-            pstmt.setLong(6, article.getFileSize());
-            pstmt.setLong(7, article.getId());
-            pstmt.executeUpdate();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        jdbcTemplate.update(sql, new Object[] {article.getWriter(), article.getTitle(),
+                article.getContent(), article.getFilename(),
+                article.getSaveName(), article.getFileSize(),
+                article.getId()});
     }
 
     public List<Article> getList() {
-
-        Connection conn = getConnection();
-        List<Article> list = new ArrayList<Article>();
         String sql = "SELECT * FROM photogallery ORDER by id desc";
-        PreparedStatement pstmt;
-        ResultSet rs;
-        try {
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Article article = new Article();
-                article.setId(rs.getLong("id"));
-                article.setWriter(rs.getString("writer"));
-                article.setTitle(rs.getString("title"));
-                article.setContent(rs.getString("content"));
-                article.setFilename(rs.getString("filename"));
-                article.setSaveName(rs.getString("savename"));
-                article.setFileSize(rs.getLong("filesize"));
-                list.add(article);
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return list;
+        return jdbcTemplate.query(sql, new ArticleMapper());
     }
+
+    protected static final class ArticleMapper implements RowMapper<Article> {
+        public Article mapRow(ResultSet rs, int rowNum)
+                throws SQLException {
+            Article article = new Article();
+            article.setId(rs.getLong("id"));
+            article.setWriter(rs.getString("writer"));
+            article.setTitle(rs.getString("title"));
+            article.setContent(rs.getString("content"));
+            article.setFilename(rs.getString("filename"));
+            article.setSaveName(rs.getString("savename"));
+            article.setFileSize(rs.getLong("filesize"));
+            return article;
+        }
+    }
+
 }

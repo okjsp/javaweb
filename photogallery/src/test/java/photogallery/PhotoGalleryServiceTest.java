@@ -22,7 +22,7 @@ public class PhotoGalleryServiceTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        int add = photoGalleryService.add(article);
+        long add = photoGalleryService.add(article);
         assertTrue(add > 0);
     }
 
@@ -33,7 +33,7 @@ public class PhotoGalleryServiceTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        int add = photoGalleryService.add(article);
+        long add = photoGalleryService.add(article);
         assertTrue(add > 0);
 
         Article article2 = photoGalleryService.get(add);
@@ -48,7 +48,7 @@ public class PhotoGalleryServiceTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        int add = photoGalleryService.add(article);
+        long add = photoGalleryService.add(article);
 
         long sizeBefore = photoGalleryService.size();
         boolean result = photoGalleryService.delete(add);
@@ -65,7 +65,7 @@ public class PhotoGalleryServiceTest extends TestCase {
         article.setTitle("title");
         article.setContent("content");
 
-        int add = photoGalleryService.add(article);
+        long add = photoGalleryService.add(article);
         assertTrue(add > 0);
 
         Article article2 = photoGalleryService.get(add);
@@ -90,9 +90,9 @@ public class PhotoGalleryServiceTest extends TestCase {
         article2.setContent("content2");
 
         int before = photoGalleryService.getList().size();
-        int add = photoGalleryService.add(article);
+        long add = photoGalleryService.add(article);
         assertTrue(add > 0);
-        int add1 = photoGalleryService.add(article2);
+        long add1 = photoGalleryService.add(article2);
         assertTrue(add1 > 0);
 
         List<Article> list = photoGalleryService.getList();

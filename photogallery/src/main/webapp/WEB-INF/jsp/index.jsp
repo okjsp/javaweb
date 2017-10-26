@@ -66,7 +66,7 @@
     function deleteFile(id) {
         var form = document.getElementById("idform");
         form.action = "/delete.action";
-        form.method = "POST";
+        form.method = "post";
         document.getElementsByName("id")[0].value = id;
         form.submit();
     }
