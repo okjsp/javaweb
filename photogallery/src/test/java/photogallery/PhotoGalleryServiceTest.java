@@ -78,6 +78,7 @@ public class PhotoGalleryServiceTest extends TestCase {
 
     }
 
+    @Test
     public void testGetList() {
         Article article = new Article();
         article.setWriter("kenu");
@@ -99,6 +100,12 @@ public class PhotoGalleryServiceTest extends TestCase {
         int size = list.size();
         assertEquals(2, size - before);
 
+    }
+
+    @Test
+    public void testGetSize() {
+        int size = photoGalleryService.getList().size();
+        assertTrue(size > 0);
     }
 
 }
