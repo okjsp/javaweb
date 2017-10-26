@@ -32,3 +32,6 @@ target
 # intelliJ
 .idea/
 *.iml
+
+# sonar
+.scannerwork/
