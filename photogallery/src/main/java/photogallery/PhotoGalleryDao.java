@@ -3,28 +3,15 @@ package photogallery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class PhotoGalleryDao {
-
     @Autowired
-    private DataSource dataSource;
-
-    private JdbcTemplate jdbcTemplate;
-
-    @PostConstruct
-    public void afterPropertiesSet() throws Exception {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    JdbcTemplate jdbcTemplate;
 
     public long add(Article article) {
         String sql = "INSERT INTO photogallery (writer, title, content, filename, savename, filesize)" +
