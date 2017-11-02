@@ -6,6 +6,6 @@
     <title>Hello</title>
 </head>
 <body>
-    Hello ${name}!
+    Hello ${name}
 </body>
 </html>
