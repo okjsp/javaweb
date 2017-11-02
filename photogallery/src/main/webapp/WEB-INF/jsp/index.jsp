@@ -13,8 +13,7 @@
 <body>
 <div id="wrap">
 
-    <h2>Photo Gallery</h2>
-    ${param.test }
+    <h1>Photo Gallery!</h1>
 
     <table>
         <tr>
