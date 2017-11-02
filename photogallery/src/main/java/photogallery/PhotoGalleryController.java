@@ -2,11 +2,11 @@ package photogallery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,11 +22,9 @@ public class PhotoGalleryController {
     private final String basePath = "/tmp/upload/";
 
     @RequestMapping("/index")
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("list", board.getList());
-        modelAndView.setViewName("index");
-        return modelAndView;
+    public String index(Model model) {
+        model.addAttribute("list", board.getList());
+        return "index";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)

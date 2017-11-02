@@ -1,6 +1,5 @@
-<%@ page import="photogallery.Article" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!doctype html>
 <html>
 <head>
@@ -24,38 +23,31 @@
             <th>Content</th>
             <th>x</th>
         </tr>
-        <%
-            List<Article> list = (List<Article>)request.getAttribute("list");
-            for (Article article : list) {
-        %>
-        <tr>
-            <td class="writer"><%= article.getWriter() %>
-            </td>
-            <td class="title"><a href="add.action?id=<%= article.getId() %>"><%= article.getTitle() %>
-            </a></td>
-            <td class="content"><%= article.getContent() %>
-            </td>
-            <td class="delete"><a href="javascript:deleteFile(<%= article.getId() %>)">x</a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <%= article.getContent() %>
-                <br>
-                <img src="/image.action?<%= article.getSaveName() %>" class="thumb"/>
-            </td>
-        </tr>
-        <%
-            }
-            if (list.size() == 0) {
-        %>
+        <c:forEach items="${list}" var="article">
+            <tr>
+                <td class="writer">${article.writer}
+                </td>
+                <td class="title"><a href="add.action?id=${article.id}">${article.title}
+                </a></td>
+                <td class="content">${article.content}
+                </td>
+                <td class="delete"><a href="javascript:deleteFile(${article.id})">x</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    ${article.content}
+                    <br>
+                    <img src="/image.action?${article.saveName}" class="thumb"/>
+                </td>
+            </tr>
+        </c:forEach>
+        <c:if test="${empty list}">
         <tr>
             <td colspan="4">empty
             </td>
         </tr>
-        <%
-            }
-        %>
+        </c:if>
     </table>
     <a href="add.action">Add</a>
 </div>
